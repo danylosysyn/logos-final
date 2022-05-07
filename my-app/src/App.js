@@ -3,30 +3,31 @@ import React from "react";
 import {
   BrowserRouter,
   Route,
-  Link,
   Routes
 } from "react-router-dom";
 import MainPage from './components/MainPage/MainPage';
 import LoginForm from './components/LoginForm/LoginForm';
 import AdminForm from './components/AdminForm/AdminForm';
 import { RouteConst } from './common/RouteConst';
+import {Navbar, Container, Nav} from "react-bootstrap";
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 function App() {
   return (
     <div className="App">
       <div>
-        <ul>
-          <li>
-            <Link to={RouteConst.MAIN_PAGE}>Main</Link>
-          </li>
-          <li>
-            <Link to={RouteConst.LOGIN_FORM}>Login</Link>
-          </li>
-          <li>
-            <Link to={RouteConst.ADMIN_PAGE}>Admin</Link>
-          </li>
-        </ul>
-        
+        <Navbar bg="light" variant="light">
+          <Container>
+            <Navbar.Brand href={RouteConst.MAIN_PAGE}><b>My CV</b></Navbar.Brand>
+            <Nav className="me-auto">
+              <Nav.Link href={RouteConst.MAIN_PAGE}>Main</Nav.Link>
+              <Nav.Link href={RouteConst.LOGIN_FORM}>Login</Nav.Link>
+              <Nav.Link href={RouteConst.ADMIN_PAGE}>Admin</Nav.Link>
+            </Nav>
+          </Container>
+        </Navbar>
+
         <Routes>
           <Route exact path={RouteConst.MAIN_PAGE} element={<MainPage />}></Route>
           <Route path={RouteConst.LOGIN_FORM} element={<LoginForm />}></Route>
