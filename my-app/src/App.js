@@ -9,7 +9,11 @@ import MainPage from './components/MainPage/MainPage';
 import LoginForm from './components/LoginForm/LoginForm';
 import AdminForm from './components/AdminForm/AdminForm';
 import { RouteConst } from './common/RouteConst';
-import {Navbar, Container, Nav} from "react-bootstrap";
+import {
+  Navbar,
+  Container,
+  Nav
+} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -21,7 +25,6 @@ function App() {
           <Container>
             <Navbar.Brand href={RouteConst.MAIN_PAGE}><b>My CV</b></Navbar.Brand>
             <Nav className="me-auto">
-              <Nav.Link href={RouteConst.MAIN_PAGE}>Main</Nav.Link>
               <Nav.Link href={RouteConst.LOGIN_FORM}>Login</Nav.Link>
               <Nav.Link href={RouteConst.ADMIN_PAGE}>Admin</Nav.Link>
             </Nav>
