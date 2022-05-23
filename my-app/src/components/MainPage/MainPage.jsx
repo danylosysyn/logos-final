@@ -2,14 +2,17 @@ import React from "react";
 import { useState } from "react";
 import "./MainPage.modules.css";
 import AnimatedBackground from "../AnimatedBackground/AnimatedBackground.jsx"
+import "../../firebase/firebase"
+import db from "../../firebase/firebase";
 
-let initialInfo = {
-    name: "Danylo",
+export let initialInfo = {
+    name: "Name",
     surname: "S",
     city: "Lviv",
     country: "Ukraine",
     job: "Frontend Developer",
     extraInfo: "Here is my CV",
+    isLogged: false,
 }
 
 
