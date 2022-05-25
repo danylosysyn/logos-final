@@ -18,12 +18,12 @@ import {
 } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { createStore } from "redux";
-import { initialInfo } from './components/MainPage/MainPage';
+import { UserInfo } from './components/MainPage/MainPage';
 import { Provider, useSelector } from 'react-redux';
 import "./firebase/firebase"
 
 
-const userReducer = (state = initialInfo, action) => {
+const userReducer = (state = UserInfo, action) => {
   switch (action.type) {
     case "LOGIN_TRUE":
       return { ...state, isLogged: true }
