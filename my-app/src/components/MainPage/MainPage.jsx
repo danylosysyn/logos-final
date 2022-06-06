@@ -5,36 +5,39 @@ import AnimatedBackground from "../AnimatedBackground/AnimatedBackground.jsx"
 import "../../firebase/firebase"
 import db from "../../firebase/firebase";
 import { doc, onSnapshot } from "firebase/firestore"
+import { useDispatch, useSelector } from "react-redux";
 
 
-const FetchData = async () => {
-    let updatedInfo
-    useEffect(FetchData, [db])
+// export const DataFetch = () => {
+//     return dispatch => {
+//         const docRef = doc(db, "user", "0AUUjjMKkiyYjZIgzFtT")
+//         const setData = (payload) => ({ type: "SET_DATA", payload })
+//         onSnapshot(docRef, (doc) => {
+//             console.log(doc.data())
+//             dispatch(setData(doc.data()))
+//         })
+//     }
+// }
+
+
+export const getMyInfo = (dispatch) => {
     const docRef = doc(db, "user", "0AUUjjMKkiyYjZIgzFtT")
-    console.log("response", docRef)
+    const setData = (info) => ({ type: "SET_DATA", info })
     onSnapshot(docRef, (doc) => {
         console.log(doc.data())
-        updatedInfo = doc.data()
+        return dispatch(setData(doc.data()))
     })
-    console.log(updatedInfo)
-    return updatedInfo
+};
+
+export const getInfo = (dispatch) => {
+    getMyInfo(dispatch);
 }
 
 
-export let UserInfo = () => {
-    let defaultInfo = {
-        name: "Name",
-        surname: "Surname",
-        city: "Lviv",
-        country: "Ukraine",
-        job: "Frontend Developer",
-        extraInfo: "Here is my CV",
-        isLogged: false,
-    }
 
-    return (defaultInfo)
+export const UserInfo = () => {
+    return useSelector(state => state);
 }
-
 
 const MainPage = () => {
     return (
@@ -47,8 +50,11 @@ const MainPage = () => {
 export default MainPage
 
 const InfoDiv = () => {
-    const [userInfo, setUserInfo] = useState(UserInfo)
-
+    const dispatch = useDispatch();
+    useEffect(() => {getInfo()}, [dispatch])
+    const info = useSelector((state) => state)
+    const [userInfo, setUserInfo] = useState(info)
+    console.log(info)
     return (
         <div>
             <p id="nameText">{userInfo.name} {userInfo.surname}</p>

@@ -17,22 +17,34 @@ import {
   Nav
 } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { createStore } from "redux";
+import { createStore, applyMiddleware } from "redux";
 import { UserInfo } from './components/MainPage/MainPage';
 import { Provider, useSelector } from 'react-redux';
 import "./firebase/firebase"
+import thunk from "redux-thunk"
 
+const defaultInfo = {
+  name: "Name",
+  surname: "Surname",
+  city: "City",
+  country: "Country",
+  job: "Job",
+  extraInfo: "Here is my CV",
+  isLogged: false,
+}
 
-const userReducer = (state = UserInfo, action) => {
+const userReducer = (state = defaultInfo, action) => {
   switch (action.type) {
     case "LOGIN_TRUE":
       return { ...state, isLogged: true }
+    case "SET_DATA":
+      return { ...state, info: action.info}
     default:
       return state
   }
 }
 
-export const store = createStore(userReducer)
+export const store = createStore(userReducer, applyMiddleware(thunk))
 
 function App() {
   let navigate = useNavigate()
