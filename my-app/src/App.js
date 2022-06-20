@@ -14,41 +14,40 @@ import { RouteConst } from './common/RouteConst';
 import {
   Navbar,
   Container,
-  Nav
+  Nav,
+  Button
 } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { createStore, applyMiddleware } from "redux";
-import { UserInfo } from './components/MainPage/MainPage';
-import { Provider, useSelector } from 'react-redux';
+import { Provider, useSelector, useDispatch } from 'react-redux';
 import "./firebase/firebase"
-import thunk from "redux-thunk"
-
-const defaultInfo = {
-  name: "Name",
-  surname: "Surname",
-  city: "City",
-  country: "Country",
-  job: "Job",
-  extraInfo: "Here is my CV",
-  isLogged: false,
-}
-
-const userReducer = (state = defaultInfo, action) => {
-  switch (action.type) {
-    case "LOGIN_TRUE":
-      return { ...state, isLogged: true }
-    case "SET_DATA":
-      return { ...state, info: action.info}
-    default:
-      return state
-  }
-}
-
-export const store = createStore(userReducer, applyMiddleware(thunk))
+import { store } from './redux/reducers/userReducer';
+import { getInfo } from './redux/actions/infoActions';
+import { selectInfo } from './redux/selectors/selectInfo';
+import { updateDoc } from 'firebase/firestore';
+import { docRef } from './firebase/firebase';
 
 function App() {
   let navigate = useNavigate()
-  const logInfo = useSelector(state => state.isLogged)
+  const dispatch = useDispatch();
+  const getInfoThunk = () => dispatch(getInfo());
+  useEffect(() => {
+    getInfoThunk();
+  }, []);
+  const info = useSelector(selectInfo);
+  let logInfo = info?.isLogged;
+  useEffect(() => {
+    logInfo = info?.isLogged;
+  }, [info]);
+  const logOutClickHandler = () => {
+    updateDoc(docRef, {
+      isLogged: false
+    })
+      .then(() => {
+        alert("You have successfully logged out")
+        navigate("../login")
+      })
+  }
+  
   return (
     <div className="App">
       <div>
@@ -56,9 +55,9 @@ function App() {
           <Container>
             <Navbar.Brand href={RouteConst.MAIN_PAGE}><b>My CV</b></Navbar.Brand>
             <Nav className="me-auto">
-              <Link to={RouteConst.LOGIN_FORM}>Login</Link>
-              <Link to={RouteConst.ADMIN_PAGE}>Admin</Link>
-              {logInfo ? <Link to={RouteConst.ADMIN_PAGE}>Admin</Link> : <Link to={RouteConst.LOGIN_FORM}>Login</Link>}            </Nav>
+              {logInfo ? <Link to={RouteConst.ADMIN_PAGE}>Admin</Link> : <Link to={RouteConst.LOGIN_FORM}>Login</Link>}
+            </Nav>
+            {logInfo ? <Button variant="danger" onClick={logOutClickHandler}>Log out</Button> : <></>}
           </Container>
         </Navbar>
 

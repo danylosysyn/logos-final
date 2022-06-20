@@ -1,0 +1,12 @@
+p {
+    font-size: 36px;
+    font-weight: bold;
+}
+
+.form-label {
+    font-size: 25px;
+}
+
+.city-country {
+    display: flex;
+}

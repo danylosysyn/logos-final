@@ -7,9 +7,13 @@ import {
 }
     from "rsuite"
 import "./LoginForm.modules.css"
-import React from "react"
-import { useDispatch, useSelector} from "react-redux"
+import React, { useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom";
+import { getInfo } from "../../redux/actions/infoActions.js"
+import { selectInfo } from "../../redux/selectors/selectInfo.js"
+import { updateDoc } from "firebase/firestore";
+import { docRef } from "../../firebase/firebase.js"
 
 const LoginForm = () => {
     return (
@@ -62,15 +66,31 @@ const LoginFormElements = () => {
     const dispatch = useDispatch();
     const logInfo = useSelector(state => state.isLogged)
     let navigate = useNavigate()
+    const getInfoThunk = () => dispatch(getInfo());
+    useEffect(() => {
+        getInfoThunk();
+    }, []);
+    const info = useSelector(selectInfo);
+    let isLogged = info?.isLogged;
+    useEffect(() => {
+        isLogged = info?.isLogged;
+    }, [info]);
     const handleSubmit = () => {
-
         if (!formRef.current.check()) {
             console.error('Form Error');
             return;
         }
-        dispatch({type: "LOGIN_TRUE"})
-        navigate("../admin")
-        console.log(formValue, 'Form Value');
+        updateDoc(docRef, {
+            isLogged: true
+        })
+            .then(() => {
+                alert("You have successfully logged in")
+                navigate("../admin")
+            })
+
+        // dispatch({type: "LOGIN_TRUE"})
+        // navigate("../admin")
+        // console.log(formValue, 'Form Value');
     };
 
     const handleCheckEmail = () => {

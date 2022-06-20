@@ -7,3 +7,35 @@
 #myInfoText{
     font-size: 25px;
 }
+
+#wholeDiv{
+    display: block;
+}
+
+#imageDiv{
+    height: 170px;
+    width: 170px;
+    margin-left: 3vh;
+    display: flex;
+    justify-content: center;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: black;
+    object-fit: cover;
+}
+
+#infoDiv{
+    display: flex;
+    background-color: black;
+    border-radius: 10px;
+    padding: 30px;
+    margin-bottom: 20px;
+    justify-content: space-around;
+}
+
+#myInfo{
+    color:whitesmoke;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}

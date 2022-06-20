@@ -10,3 +10,30 @@ a {
   font-size: 16px;
   font-weight: 500;
 }
+
+.navbar-nav{
+  background-color: white;
+  border:none;
+  position: relative;
+  border-radius: 5px;
+}
+
+.navbar-nav:hover{
+  border: none;
+  border-bottom: 5px solid #FFFFFF;
+}
+
+.navbar-nav::after{
+  content: '';
+  position: absolute;
+  width: 0px;
+  height: 5px;
+  left: 50%;
+  bottom:0;
+  background-color: red;
+  transition: all ease-in-out .2s;
+}
+.navbar-nav:hover::after{
+  width: 100%;
+  left: 0;
+}

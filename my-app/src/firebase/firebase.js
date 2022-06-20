@@ -5,6 +5,7 @@ import {
     onSnapshot,
     doc
 } from "firebase/firestore"
+import { getStorage } from "firebase/storage"
 
 
 
@@ -17,7 +18,7 @@ const firebaseConfig = {
     appId: "1:709852912575:web:24ce2ccca0cc9c27751f0a"
 };
 
-initializeApp(firebaseConfig)
+const app = initializeApp(firebaseConfig)
 
 const db = getFirestore()
 
@@ -33,9 +34,11 @@ const colRef = collection(db, "user")
 //     console.log(myInfo)
 // })
 
-const docRef = doc(db, "user", "0AUUjjMKkiyYjZIgzFtT")
+export const docRef = doc(db, "user", "0AUUjjMKkiyYjZIgzFtT")
 
 onSnapshot(docRef, (doc) => {
     console.log(doc.data())
     return doc.data()
 })
+
+export const storage = getStorage(app)
