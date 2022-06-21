@@ -25,6 +25,8 @@ import { getInfo } from './redux/actions/infoActions';
 import { selectInfo } from './redux/selectors/selectInfo';
 import { updateDoc } from 'firebase/firestore';
 import { docRef } from './firebase/firebase';
+import { RequireAuth } from "./components/hoc/RequireAuth"
+import { AuthProvider } from './components/hoc/AuthProvider';
 
 function App() {
   let navigate = useNavigate()
@@ -43,11 +45,10 @@ function App() {
       isLogged: false
     })
       .then(() => {
-        alert("You have successfully logged out")
         navigate("../login")
       })
   }
-  
+
   return (
     <div className="App">
       <div>
@@ -61,11 +62,18 @@ function App() {
           </Container>
         </Navbar>
 
-        <Routes>
-          <Route exact path={RouteConst.MAIN_PAGE} element={<MainPage />}></Route>
-          <Route path={RouteConst.LOGIN_FORM} element={<LoginForm />}></Route>
-          <Route path={RouteConst.ADMIN_PAGE} element={<AdminForm />}></Route>
-        </Routes>
+        <AuthProvider>
+          <Routes>
+            <Route exact path={RouteConst.MAIN_PAGE} element={<MainPage />}></Route>
+            <Route path={RouteConst.LOGIN_FORM} element={<LoginForm />}></Route>
+            {/* <Route path={RouteConst.ADMIN_PAGE} element={<AdminForm />}></Route> */}
+            <Route path={RouteConst.ADMIN_PAGE} element={
+              <RequireAuth>
+                <AdminForm />
+              </RequireAuth>
+            } />
+          </Routes>
+        </AuthProvider>
       </div>
     </div>
   );

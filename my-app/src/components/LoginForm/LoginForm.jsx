@@ -9,11 +9,12 @@ import {
 import "./LoginForm.modules.css"
 import React, { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { getInfo } from "../../redux/actions/infoActions.js"
 import { selectInfo } from "../../redux/selectors/selectInfo.js"
 import { updateDoc } from "firebase/firestore";
 import { docRef } from "../../firebase/firebase.js"
+import { useAuth } from "../hoc/useAuth.js"
 
 const LoginForm = () => {
     return (
@@ -84,8 +85,8 @@ const LoginFormElements = () => {
             isLogged: true
         })
             .then(() => {
-                alert("You have successfully logged in")
-                navigate("../admin")
+                signIn(formValue.name, () => navigate("../admin", {replace: true}))
+                //navigate("../admin")
             })
 
         // dispatch({type: "LOGIN_TRUE"})
@@ -99,6 +100,9 @@ const LoginFormElements = () => {
         });
     };
 
+    const location = useLocation();
+    const formPage = location.state?.from?.pathname || "/"
+    const { signIn } = useAuth();
     return (
         <Form model={model} ref={formRef} id="formDiv" onChange={setFormValue} onCheck={setFormError} formValue={formValue}>
             <TextField name="name" label="Username" className="formDivElement" />
