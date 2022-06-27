@@ -104,7 +104,7 @@ const LoginFormElements = () => {
     const formPage = location.state?.from?.pathname || "/"
     const { signIn } = useAuth();
     return (
-        <Form model={model} ref={formRef} id="formDiv" onChange={setFormValue} onCheck={setFormError} formValue={formValue}>
+        <Form model={model} ref={formRef} id="formDiv" onChange={setFormValue} onCheck={setFormError} formValue={formValue} autoComplete="off">
             <TextField name="name" label="Username" className="formDivElement" />
             <TextField name="email" label="Email" className="formDivElement" />
             <TextField name="password" label="Password" type="password" autoComplete="off" className="formDivElement" />
@@ -112,7 +112,7 @@ const LoginFormElements = () => {
                 name="verifyPassword"
                 label="Verify password"
                 type="password"
-                autoComplete="off"
+                //autoComplete="off"
                 className="formDivElement"
             />
             <ButtonToolbar>

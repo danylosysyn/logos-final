@@ -53,7 +53,7 @@ function App() {
     <div className="App">
       <div>
         <Navbar bg="light" variant="light">
-          <Container>
+          <Container style={{backgroundColor: "#ff4040", borderRadius: "10px", padding: "0px 20px"}}>
             <Navbar.Brand href={RouteConst.MAIN_PAGE}><b>My CV</b></Navbar.Brand>
             <Nav className="me-auto">
               {logInfo ? <Link to={RouteConst.ADMIN_PAGE}>Admin</Link> : <Link to={RouteConst.LOGIN_FORM}>Login</Link>}
